@@ -1,0 +1,130 @@
+<!-- This code is only for testing purposes. -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Optimized Route Map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx9mFGBRNOqXB7-1K_4ciASdJK_fH6IJo&libraries=geometry"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #controls {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Optimized Route Map</h1>
+    <div id="controls">
+        <input type="number" id="distanceKM" placeholder="Enter distance in km" />
+        <button onclick="calculateRoute()">Calculate Route</button>
+    </div>
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let userLocation = null;
+        let markers = [];
+        let directionsService;
+        let directionsRenderer;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 41.9981, lng: 21.4254 }, // Default location (Skopje)
+                zoom: 12,
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        map.setCenter(userLocation);
+
+                        const marker = new google.maps.Marker({
+                            position: userLocation,
+                            map: map,
+                            title: "Your Location",
+                        });
+                        markers.push(marker);
+                    },
+                    () => {
+                        alert("Failed to get your location.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        async function calculateRoute() {
+            const distanceKM = document.getElementById("distanceKM").value;
+
+            if (!userLocation) {
+                alert("Please get your current location first.");
+                return;
+            }
+
+            if (!distanceKM || isNaN(distanceKM) || distanceKM <= 0) {
+                alert("Please enter a valid distance in kilometers.");
+                return;
+            }
+
+            const requestData = {
+                location: userLocation,
+                distance: parseFloat(distanceKM),
+            };
+
+            try {
+                const response = await fetch("/route", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                const data = await response.json();
+
+                console.log(data);
+
+                if (response.ok && data.routes && data.routes[0].overview_polyline) {
+                    const routePath = google.maps.geometry.encoding.decodePath(data.routes[0].overview_polyline.points);
+
+                    const routePolyline = new google.maps.Polyline({
+                        path: routePath,
+                        geodesic: true,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                    });
+
+                    routePolyline.setMap(map);
+
+                    directionsRenderer.setDirections(data);
+
+                    alert("Route calculated successfully!");
+                } else {
+                    alert("Failed to calculate the route. Please check the input or try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while calculating the route.");
+            }
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>
+ -->
