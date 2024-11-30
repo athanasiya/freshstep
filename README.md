@@ -89,7 +89,12 @@ The Laravel application is located in the web_app folder. Follow these steps to 
    Update the .env file with your database credentials. For example:
 
    ```bash
-   cp .env.example .env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=8889
+    DB_DATABASE=codefu
+    DB_USERNAME=root
+    DB_PASSWORD=root
    ```
 
 7. **API Integration:**
